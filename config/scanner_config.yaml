@@ -1,0 +1,140 @@
+# Web Discovery Tool Configuration
+# Version: 2.0
+
+scanner:
+  name: "Advanced Web Discovery Tool"
+  version: "2.0.0"
+  author: "Security Research Team"
+  
+scanning:
+  max_threads: 50
+  timeout: 10
+  user_agent: "Mozilla/5.0 (compatible; AdvancedWebScanner/2.0; +https://github.com/yourusername/web-discovery-tool)"
+  follow_redirects: true
+  verify_ssl: false
+  rate_limit: 100  # requests per second
+  max_retries: 3
+  retry_delay: 1
+
+wordlists:
+  directories: "wordlists/directories.txt"
+  subdomains: "wordlists/subdomains.txt"
+  api_patterns: "wordlists/api_patterns.txt"
+  file_extensions: "wordlists/file_extensions.txt"
+  custom_wordlists: []
+  
+plugins:
+  enabled:
+    - "sql_injection"
+    - "xss_detector"
+    - "lfi_scanner"
+    - "csrf_detector"
+    - "ssrf_detector"
+  scanning_depth: "medium"  # low, medium, high, intensive
+  parallel_plugins: 3
+  timeout: 30
+
+vulnerability_scanning:
+  sql_injection: true
+  xss: true
+  lfi: true
+  rfi: true
+  command_injection: true
+  ssrf: true
+  csrf: true
+  xxe: true
+  file_upload: true
+  insecure_deserialization: true
+
+output:
+  format: ["json", "html", "txt", "pdf"]
+  directory: "scan_results"
+  save_downloads: true
+  create_tarball: true
+  compress_reports: true
+  
+reporting:
+  title: "Web Security Assessment Report"
+  company: "Your Security Company"
+  include_executive_summary: true
+  include_technical_details: true
+  include_recommendations: true
+  risk_levels:
+    critical: 9.0
+    high: 7.0
+    medium: 4.0
+    low: 0.0
+
+authentication:
+  enabled: false
+  username: ""
+  password: ""
+  auth_type: "basic"  # basic, digest, bearer, oauth
+  token: ""
+  cookies: {}
+
+proxy:
+  enabled: false
+  http: "http://proxy:8080"
+  https: "https://proxy:8080"
+  socks5: "socks5://proxy:1080"
+
+advanced:
+  port_scanning: true
+  port_range: "1-1000"
+  service_detection: true
+  os_detection: true
+  banner_grabbing: true
+  dns_enumeration: true
+  whois_lookup: true
+  ssl_analysis: true
+  technology_detection: true
+  javascript_analysis: true
+  header_analysis: true
+  cookie_analysis: true
+  form_analysis: true
+  
+notifications:
+  enabled: false
+  email:
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    username: ""
+    password: ""
+    to: ""
+  webhook:
+    url: ""
+    secret: ""
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "scanner.log"
+  max_size: "10MB"
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+performance:
+  memory_limit: "2GB"
+  cpu_usage: 80  # percentage
+  disk_space_warning: "100MB"
+  cleanup_old_scans: true
+  keep_scans: 10
+
+api:
+  enabled: false
+  host: "127.0.0.1"
+  port: 8000
+  auth_required: true
+  api_key: ""
+
+# Custom rules
+custom_rules:
+  - name: "Admin Panel Detection"
+    pattern: "(admin|administrator|panel|dashboard)"
+    severity: "low"
+  - name: "Config File Exposure"
+    pattern: "(\\.env|config\\.|setting)"
+    severity: "high"
+  - name: "Database Dump"
+    pattern: "(\\.sql|\\.dump|backup)"
+    severity: "critical"
